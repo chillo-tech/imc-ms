@@ -1,0 +1,11 @@
+POST http://localhost:8080/imc
+Content-Type: application/json
+
+{
+  "taille": 180,
+  "poids": 200
+}
+
+###
+
+GET http://localhost:8080/imc
