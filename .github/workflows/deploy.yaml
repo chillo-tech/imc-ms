@@ -18,7 +18,11 @@ jobs:
           script: |
             sudo mkdir -p ${{env.FOLDER}}
             sudo ls -al ${{env.FOLDER}}
-      
+  
+  generate-image:
+    name: create folder
+    runs-on: ubuntu-latest    
+    steps:
       - name: clone repository
         uses: actions/checkout@master
 
@@ -38,8 +42,13 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: simachille/${{env.IMAGE}}:${{env.VERSION}}
+          tags: simachille/${{env.IMAGE}}:latest
         
+  run-container:
+    name: run container
+    runs-on: ubuntu-latest
+    needs: ['create-folder', 'generate-image']
+    steps:
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -49,3 +58,15 @@ jobs:
           port: ${{ secrets.PORT }}
           source: ".env,compose.yaml"
           target: ${{env.FOLDER}}
+      
+      - name: run container
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo docker compose -f ${{env.FOLDER}}/compose.yaml stop  || true
+            sudo docker compose -f ${{env.FOLDER}}/compose.yaml rm -f || true
+            sudo docker compose -f ${{env.FOLDER}}/compose.yaml up -d
