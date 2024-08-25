@@ -72,6 +72,9 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            echo DB_URL="jdbc:mysql://localhost:3306/imc" >> ${{env.FOLDER}}/.env
+            echo DB_USERNAME="root" >> ${{env.FOLDER}}/.env
+            echo DB_PASSWORD="mysql" >> ${{env.FOLDER}}/.env
             sudo docker compose -f ${{env.FOLDER}}/compose.yaml stop  || true
             sudo docker compose -f ${{env.FOLDER}}/compose.yaml rm -f || true
             sudo docker compose -f ${{env.FOLDER}}/compose.yaml up -d
