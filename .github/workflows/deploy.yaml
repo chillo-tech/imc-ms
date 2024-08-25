@@ -1,10 +1,10 @@
 on:
   workflow_dispatch:
 
-job:
+jobs:
   create-folder:
     name: create folder
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: run step create folder
         run: echo "test"
