@@ -1,10 +1,21 @@
 on:
   workflow_dispatch:
-
+env:
+  FOLDER: /opt/imc/imc-ms
+  IMAGE: imc-ms
+  VERSION: latest
 jobs:
   create-folder:
     name: create folder
     runs-on: ubuntu-latest
     steps:
       - name: run step create folder
-        run: echo "test"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo mkdir -p ${{env.FOLDER}}
+            sudo ls -al ${{env.FOLDER}}
