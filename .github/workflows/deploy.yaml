@@ -29,7 +29,7 @@ jobs:
 
       - name: build jar
         run: |
-          ./mvnw package -DskipTests
+          ./mvnw clean package -Dmaven.test.skip=true
           ls -al target
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
