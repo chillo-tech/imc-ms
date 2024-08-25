@@ -25,8 +25,12 @@ jobs:
     needs: ['create-folder']
     steps:
       - name: clone repository
-        uses: actions/checkout@master
+        uses: actions/checkout@master 
 
+      - name: build jar
+        run: |
+          ./mvnw package -DskipTests
+          ls -al target
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       
