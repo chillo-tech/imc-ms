@@ -19,3 +19,15 @@ jobs:
           script: |
             sudo mkdir -p ${{env.FOLDER}}
             sudo ls -al ${{env.FOLDER}}
+      
+      - name: clone repository
+        uses: actions/checkout@v4
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: ".env,compose.yaml"
+          target: ${{env.FOLDER}}
