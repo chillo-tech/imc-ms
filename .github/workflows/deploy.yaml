@@ -22,6 +22,7 @@ jobs:
   generate-image:
     name: create folder
     runs-on: ubuntu-latest    
+    needs: ['create-folder']
     steps:
       - name: clone repository
         uses: actions/checkout@master
