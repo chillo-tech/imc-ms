@@ -20,7 +20,7 @@ jobs:
             sudo ls -al ${{env.FOLDER}}
   
   generate-image:
-    name: create folder
+    name: generate image
     runs-on: ubuntu-latest    
     needs: ['create-folder']
     steps:
