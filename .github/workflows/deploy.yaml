@@ -1,5 +1,4 @@
-on:
-  workflow_dispatch:
+on: ['push']
 env:
   FOLDER: /opt/imc/imc-ms
   IMAGE: imc-ms
