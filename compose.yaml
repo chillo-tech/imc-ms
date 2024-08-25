@@ -1,0 +1,19 @@
+services:
+  server:
+    image: imc-ms:latest
+    container_name: imc-ms
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - applications-network
+    environment:
+      - spring.datasource.url=${DB_URL}
+      - spring.datasource.username=${DB_USERNAME}
+      - spring.datasource.password=${DB_PASSWORD}
+      - spring.jpa.hibernate.ddl-auto=create-drop
+
+networks:
+  applications-network:
+   external: true
+   name: applications-network
